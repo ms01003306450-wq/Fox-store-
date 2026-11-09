@@ -1,0 +1,278 @@
+<!DOCTYP html> 
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FOX | ملابس</title>
+<link id="ico" rel="icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#eee;--line:#2a2a2a;--mute:#9a9a9a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#000;color:#fff;font-family:Tajawal,system-ui,sans-serif;line-height:1.7}
+h1,h2,h3,.btn,.add,.chip,.cart-btn{font-family:Changa,Tajawal,sans-serif}
+a{color:inherit}
+:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.shop :focus-visible,.drawer :focus-visible{outline-color:#000}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* header */
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:22px;padding:6px 16px;background:#000;border-bottom:1px solid var(--line)}
+.brand{height:52px;display:block}
+.brand img{height:100%;width:auto;display:block;mix-blend-mode:lighten}
+.top nav{display:none;gap:22px}
+.top nav a{text-decoration:none;color:var(--mute)}
+.top nav a:hover{color:#fff}
+.cart-btn{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:transparent;color:#fff;border:1.5px solid #fff;padding:7px 16px;border-radius:4px;font-size:1rem;cursor:pointer}
+.cart-btn span{background:#fff;color:#000;border-radius:99px;min-width:22px;padding:0 6px;text-align:center;font-size:.9rem}
+
+/* hero */
+.hero{display:grid;gap:16px;align-items:center;max-width:1100px;margin:auto;padding:28px 20px 56px}
+.hero-logo{width:min(300px,70%);justify-self:center;mix-blend-mode:lighten}
+.hero h1{font-weight:800;font-size:clamp(2.3rem,8vw,4.4rem);line-height:1.2;margin:0 0 16px}
+.hero p{color:var(--mute);max-width:34ch;margin:0 0 28px;font-size:1.1rem}
+.btn{display:inline-block;background:#fff;color:#000;padding:12px 30px;font-weight:600;text-decoration:none;border-radius:4px}
+
+/* shop */
+.shop{background:var(--paper);color:#000;padding:48px 16px 64px}
+.shop>*{max-width:1100px;margin-inline:auto}
+.shop h2,.about h2{font-size:2rem;margin:0 auto 18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{border:1.5px solid #000;background:transparent;color:#000;padding:6px 18px;border-radius:99px;font-size:1rem;cursor:pointer}
+.chip.on{background:#000;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}
+.soon{grid-column:1/-1;padding:32px 0;color:#555;font-size:1.1rem}
+.card{background:#fff;display:flex;flex-direction:column;padding-bottom:12px}
+.thumb{aspect-ratio:4/5;background:#000;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb.ph img{object-fit:contain;padding:20%}
+.card h3{font-size:1rem;margin:10px 12px 0}
+.price{margin:0 12px;font-weight:700}
+.sizes{display:flex;gap:6px;margin:8px 12px}
+.sz{width:38px;height:38px;border:1.5px solid #000;background:#fff;color:#000;cursor:pointer;font-weight:700;border-radius:4px}
+.sz.on{background:#000;color:#fff}
+.add{margin:0 12px;background:#000;color:#fff;border:0;padding:10px;cursor:pointer;border-radius:4px;font-size:1rem}
+
+/* about + footer */
+.about{max-width:1100px;margin:auto;padding:56px 20px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+.cols>div{border-top:2px solid #fff;padding-top:12px}
+.cols h3{margin:0;font-size:1.2rem}
+.cols p{margin:4px 0 0;color:var(--mute)}
+footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding:26px 20px;border-top:1px solid var(--line);color:var(--mute)}
+footer a{color:#fff}
+
+/* cart drawer */
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:min(400px,100%);background:#fff;color:#000;display:flex;flex-direction:column;z-index:30;transform:translateX(-100%);visibility:hidden;transition:transform .25s,visibility 0s .25s}
+body.open .veil{opacity:1;pointer-events:auto}
+body.open .drawer{transform:none;visibility:visible;transition:transform .25s}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid #ddd}
+.dh h2{margin:0;font-size:1.4rem}
+.x{background:none;border:0;font-size:1.3rem;cursor:pointer;padding:8px}
+.items{flex:1;overflow:auto}
+.empty{padding:28px 18px;color:#555}
+.it{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:14px 18px;border-bottom:1px solid #ddd}
+.it small{color:#555}
+.ln{font-weight:700}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:34px;height:34px;border:1.5px solid #000;background:#fff;cursor:pointer;border-radius:4px;font-size:1.1rem}
+.df{padding:16px 18px;border-top:1px solid #ddd}
+.df .add{margin:10px 0 8px;width:100%}
+.df small{color:#555}
+.tot{display:flex;justify-content:space-between;font-size:1.15rem}
+
+@media(min-width:800px){
+  .top nav{display:flex}
+  .hero{grid-template-columns:1.1fr .9fr;min-height:78vh;padding-block:40px}
+  .hero-logo{order:2;width:100%;max-width:340px}
+}
+  .sizes{flex-wrap:wrap}
+.sz,.qs{width:auto;min-width:38px;padding:0 8px}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="#" class="brand" aria-label="FOX"><img data-logo alt="FOX"></a>
+  <nav>
+    <a href="#shop">المنتجات</a>
+    <a href="#about">ليه FOX</a>
+    <a href="#contact">تواصل معنا</a>
+  </nav>
+  <button id="cartBtn" class="cart-btn">السلة <span id="cartCount">0</span></button>
+</header>
+
+<main>
+  <section class="hero">
+    <img class="hero-logo" data-logo alt="شعار FOX">
+    <div>
+      <h1>لبس بيشبهك.<br>مش بيشبه حد.</h1>
+      <p>تيشيرتات وهوديز وبناطيل وروند وجواكيت وبوكلت وقميص بخامات مريحة، وتوصيل لحد باب البيت.</p>
+      <a class="btn" href="#shop">تسوق الآن</a>
+    </div>
+  </section>
+
+  <section id="shop" class="shop">
+    <h2>المنتجات</h2>
+    <div id="chips" class="chips"></div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>ليه FOX</h2>
+    <div class="cols">
+      <div><h3>خامات مريحة</h3><p>قطن بيتحمل الغسيل ويفضل شكله.</p></div>
+      <div><h3>مقاسات واضحة</h3><p>من S لحد 3XL، واختار اللي يناسبك قبل ما تطلب.</p></div>
+      <div><h3>توصيل ودفع عند الاستلام</h3><p>بنوصل لكل المحافظات وتدفع لما الطلب يوصلك.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <span>© <span id="year"></span> FOX</span>
+  <a id="wa" href="#" target="_blank" rel="noopener">اطلب أو اسأل على واتساب</a>
+</footer>
+
+<div id="veil" class="veil"></div>
+<aside id="drawer" class="drawer" aria-label="السلة">
+  <div class="dh"><h2>سلتك</h2><button id="closeBtn" class="x" aria-label="إغلاق">✕</button></div>
+  <div id="items" class="items"></div>
+  <div class="df">
+    <div class="tot"><span>الإجمالي</span><b id="total">0 ج.م</b></div>
+    <button id="order" class="add">أرسل الطلب على واتساب</button>
+    <small>هيتفتح واتساب برسالة فيها طلبك جاهز.</small>
+  </div>
+</aside>
+
+<script>
+// غيّر الرقم لرقم واتساب بتاعك بالصيغة الدولية من غير + (مثال مصر: 2010xxxxxxxx)
+const WHATSAPP = "201003306450";
+
+// المنتجات فاضية دلوقتي. لما تجهز، ضيف منتج بالشكل ده جوه القوسين:
+// { id: 1, name: "تيشيرت FOX", cat: "تيشيرتات", price: 350, img: "" },
+// img: مسار الصورة لو عندك، ولو سيبتها فاضية بيظهر اللوجو. كل منتج لازم id مختلف.
+const PRODUCTS = [];
+
+const SIZES = ["S", "M", "L", "XL","2XL","3XL"];
+
+const $ = (id) => document.getElementById(id);
+const money = (n) => n.toLocaleString("en") + " ج.م";
+let cat = "الكل";
+const picked = {};
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("fox-cart")) || []; } catch (e) { cart = []; }
+const save = () => { try { localStorage.setItem("fox-cart", JSON.stringify(cart)); } catch (e) {} };
+
+function renderChips() {
+  if (!PRODUCTS.length) { $("chips").innerHTML = ""; return; }
+  const cats = ["الكل", ...new Set(PRODUCTS.map((p) => p.cat))];
+  $("chips").innerHTML = cats.map((c) => `<button class="chip${c === cat ? " on" : ""}" data-c="${c}">${c}</button>`).join("");
+}
+
+function renderGrid() {
+  if (!PRODUCTS.length) {
+    $("grid").innerHTML = `<p class="soon">المنتجات جاية قريب. تابعنا.</p>`;
+    return;
+  }
+  const list = PRODUCTS.filter((p) => cat === "الكل" || p.cat === cat);
+  $("grid").innerHTML = list.map((p) => `
+    <article class="card">
+      <div class="thumb${p.img ? "" : " ph"}"><img src="${p.img || LOGO}" alt="${p.name}"></div>
+      <h3>${p.name}</h3>
+      <p class="price">${money(p.price)}</p>
+      <div class="sizes" data-id="${p.id}">
+        ${SIZES.map((s) => `<button class="sz${picked[p.id] === s ? " on" : ""}" data-s="${s}">${s}</button>`).join("")}
+      </div>
+      <button class="add" data-id="${p.id}">أضف للسلة</button>
+    </article>`).join("");
+}
+
+function renderCart() {
+  const count = cart.reduce((a, i) => a + i.q, 0);
+  const total = cart.reduce((a, i) => a + i.q * i.price, 0);
+  $("cartCount").textContent = count;
+  $("total").textContent = money(total);
+  $("items").innerHTML = cart.length
+    ? cart.map((i) => `
+      <div class="it">
+        <div><b>${i.name}</b><br><small>المقاس: ${i.size}</small></div>
+        <div class="ln">${money(i.q * i.price)}</div>
+        <div class="qty">
+          <button data-k="${i.k}" data-d="-1" aria-label="تقليل">−</button>
+          <span>${i.q}</span>
+          <button data-k="${i.k}" data-d="1" aria-label="زيادة">+</button>
+        </div>
+      </div>`).join("")
+    : `<p class="empty">السلة فاضية. اختار حاجة من المنتجات.</p>`;
+  save();
+}
+
+$("chips").addEventListener("click", (e) => {
+  const c = e.target.dataset.c;
+  if (!c) return;
+  cat = c; renderChips(); renderGrid();
+});
+
+$("grid").addEventListener("click", (e) => {
+  const b = e.target;
+  if (b.classList.contains("sz")) {
+    const id = b.parentElement.dataset.id;
+    picked[id] = b.dataset.s;
+    b.parentElement.querySelectorAll(".sz").forEach((x) => x.classList.toggle("on", x === b));
+  } else if (b.classList.contains("add")) {
+    const id = +b.dataset.id, size = picked[id];
+    if (!size) {
+      b.textContent = "اختار المقاس أولًا";
+      setTimeout(() => (b.textContent = "أضف للسلة"), 1400);
+      return;
+    }
+    const p = PRODUCTS.find((x) => x.id === id), k = id + "-" + size;
+    const hit = cart.find((i) => i.k === k);
+    if (hit) hit.q++; else cart.push({ k, name: p.name, size, price: p.price, q: 1 });
+    renderCart();
+    b.textContent = "اتضافت ✓";
+    setTimeout(() => (b.textContent = "أضف للسلة"), 1200);
+  }
+});
+
+$("items").addEventListener("click", (e) => {
+  const k = e.target.dataset.k;
+  if (!k) return;
+  const i = cart.find((x) => x.k === k);
+  i.q += +e.target.dataset.d;
+  if (i.q <= 0) cart = cart.filter((x) => x.k !== k);
+  renderCart();
+});
+
+const toggle = (open) => document.body.classList.toggle("open", open);
+$("cartBtn").onclick = () => toggle(true);
+$("closeBtn").onclick = () => toggle(false);
+$("veil").onclick = () => toggle(false);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") toggle(false); });
+
+$("order").onclick = () => {
+  if (!cart.length) return;
+  const lines = cart.map((i) => `- ${i.name} (${i.size}) × ${i.q} = ${money(i.q * i.price)}`);
+  const total = cart.reduce((a, i) => a + i.q * i.price, 0);
+  const msg = `طلب جديد من موقع FOX:\n${lines.join("\n")}\nالإجمالي: ${money(total)}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+};
+
+$("wa").href = `https://wa.me/${WHATSAPP}`;
+$("year").textContent = new Date().getFullYear();
+
+// اللوجو مدمج هنا كنص (مش محتاج ملف صورة). متمسحش السطر ده.
+const LOGO = "data:image/webp;base64,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";
+document.querySelectorAll("[data-logo]").forEach((i) => (i.src = LOGO));
+$("ico").href = LOGO;
+
+renderChips(); renderGrid(); renderCart();
+</script>
+  <script src="products.js"></script>
+<script src="extra.js"></script>
+<script src="extra2.js"></script>
+<script src="extra3.js"></script>
+</body>
+</html>
