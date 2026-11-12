@@ -23,7 +23,7 @@
   ];
   const PAY = [ // طرق الدفع. غيّر الرقم والحساب لبياناتك (info فاضية = مفيش تحويل)
     { id: "cod", name: "كاش عند الاستلام", info: "" },
-    { id: "vf", name: "فودافون كاش", info: "01003306450" },
+    { id: "vf", name: "فودافون كاش", info: "01000000000" },
     { id: "ip", name: "إنستا باي", info: "yourname@instapay" }
   ];
   const BAND = ["FOX", "لبس بيشبهك", "توصيل لكل المحافظات", "الدفع عند الاستلام"];
@@ -185,6 +185,9 @@
   ck.innerHTML = `
     <div class="pr"><input id="promo" placeholder="كود الخصم" autocomplete="off"><button id="applyP" type="button">تطبيق</button></div>
     <small id="pmsg"></small>
+    <input id="cname" placeholder="الاسم" autocomplete="name">
+    <input id="cphone" type="tel" inputmode="tel" placeholder="رقم الموبايل" autocomplete="tel">
+    <input id="caddr" placeholder="العنوان بالتفصيل" autocomplete="street-address">
     <select id="gov" aria-label="المحافظة"><option value="">اختار المحافظة</option>${Object.keys(RATES).map((g) => `<option>${g}</option>`).join("")}</select>
     <small id="gmsg"></small>
     <div class="pay"><b>طريقة الدفع</b>
@@ -247,6 +250,12 @@
 
   $("order").onclick = () => {
     if (!cart.length) return;
+    const cname = $("cname").value.trim(), cphone = $("cphone").value.trim(), caddr = $("caddr").value.trim();
+    if (!cname || cphone.replace(/\D/g, "").length < 10 || !caddr) {
+      $("gmsg").textContent = "اكتب الاسم ورقم الموبايل والعنوان";
+      $("gmsg").className = "gm";
+      return;
+    }
     if (!gov) {
       $("gmsg").textContent = "اختار المحافظة الأول عشان نحسب الشحن";
       $("gmsg").className = "gm";
@@ -260,6 +269,14 @@
     const pmt = PAY.find((x) => x.id === pay);
     text += `\nالشحن (${gov}): ${s.ship ? money(s.ship) : "مجاني"}\nالإجمالي: ${money(s.total)}\nطريقة الدفع: ${pmt.name}`;
     if (pmt.info) text += `\n(هبعتلك صورة التحويل)`;
+    text += `\nالاسم: ${cname}\nالموبايل: ${cphone}\nالعنوان: ${caddr}`;
+    if (window.FOX_SAVE_ORDER) {
+      window.FOX_SAVE_ORDER({
+        name: cname, phone: cphone, address: caddr, governorate: gov, payment: pmt.name,
+        items: cart.map((i) => ({ name: i.name, size: i.size, q: i.q, price: i.price })),
+        subtotal: s.sub, discount: s.disc, code, shipping: s.ship, total: s.total
+      });
+    }
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank");
   };
 
